@@ -6,11 +6,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 class RebarCount {
-    private HashMap<Integer, String> rebars;
+    private Map<Integer, Double> rebars = new HashMap<>();
 }

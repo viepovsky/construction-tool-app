@@ -27,11 +27,13 @@ class BeamRebars {
     @NotNull
     private int lowerRebarsCount;
 
+    private int beamWidth;
+
+    private int beamHigh;
+
     private int stirrupDiameter;
 
     private int stirrupSpacing;
-
-    private int stirrupLegs;
 
     private int stirrupSpacingDensity;
 
