@@ -1,4 +1,4 @@
-package com.viepovsky.rebarcount;
+package com.viepovsky.rebarcount.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +12,6 @@ import java.util.Map;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-class RebarCount {
+public class RebarLengthResponse {
     private Map<Integer, Double> rebars = new HashMap<>();
 }

@@ -1,31 +1,34 @@
 package com.viepovsky.rebarcount;
 
+import com.viepovsky.rebarcount.dto.BeamRequest;
+import com.viepovsky.rebarcount.dto.RebarLengthResponse;
+import com.viepovsky.rebarcount.dto.SlabRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
 @Service
 class CountingService {
-    private RebarCount rebarCount;
+    private RebarLengthResponse rebarLengthResponse;
     private int rebarsLength;
 
-    RebarCount calculateRebarsLengthInBeam(BeamRebars rebars) {
+    RebarLengthResponse calculateRebarsLengthInBeam(BeamRequest rebars) {
         initClassFields(rebars);
         calculateAndStoreRebarsLength(rebars.getUpperRebarsCount(), rebars.getUpperRebarsDiameter());
         calculateAndStoreRebarsLength(rebars.getLowerRebarsCount(), rebars.getLowerRebarsDiameter());
         calculateAndStoreStirrupLength(rebars);
-        return rebarCount;
+        return rebarLengthResponse;
     }
 
-    RebarCount calculateRebarsLengthInSlab(SlabRebars rebars) {
-        rebarCount = new RebarCount();
+    RebarLengthResponse calculateRebarsLengthInSlab(SlabRequest rebars) {
+        rebarLengthResponse = new RebarLengthResponse();
         calculateAndStoreRebarsLength(rebars.getSlabLength(), rebars.getSlabWidth(), rebars.getUpperSpacing(), rebars.getUpperRebarsDiameter());
         calculateAndStoreRebarsLength(rebars.getSlabWidth(), rebars.getSlabLength(), rebars.getLowerSpacing(), rebars.getLowerRebarsDiameter());
-        return rebarCount;
+        return rebarLengthResponse;
     }
 
-    private void initClassFields(BeamRebars rebars) {
-        rebarCount = new RebarCount();
+    private void initClassFields(BeamRequest rebars) {
+        rebarLengthResponse = new RebarLengthResponse();
         rebarsLength = rebars.getBeamClearSpan() + rebars.getWidthOfSupport() * 2;
     }
 
@@ -41,7 +44,7 @@ class CountingService {
         storeRebars(length, diameter);
     }
 
-    private void calculateAndStoreStirrupLength(BeamRebars rebars) {
+    private void calculateAndStoreStirrupLength(BeamRequest rebars) {
         int stirrup = (rebars.getBeamWidth() - 3) * 2 + (rebars.getBeamHigh() - 3) * 2 + 10;
         int stirrupLength = 0;
         if (rebars.getStirrupSpacingDensity() > 0 && rebars.getStirrupSpacingDensityLength() > 0) {
@@ -54,7 +57,7 @@ class CountingService {
     }
 
     private void storeRebars(int length, int diameter) {
-        Map<Integer, Double> storedRebars = rebarCount.getRebars();
+        Map<Integer, Double> storedRebars = rebarLengthResponse.getRebars();
         if (storedRebars.containsKey(diameter)) {
             double sum = storedRebars.get(diameter) + length / 100.0;
             storedRebars.replace(diameter, sum);

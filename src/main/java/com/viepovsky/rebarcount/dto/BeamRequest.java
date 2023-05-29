@@ -1,4 +1,4 @@
-package com.viepovsky.rebarcount;
+package com.viepovsky.rebarcount.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -8,7 +8,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-class BeamRebars {
+public class BeamRequest {
     @NotNull
     private int beamClearSpan;
 
