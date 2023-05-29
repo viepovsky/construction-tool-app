@@ -3,6 +3,7 @@ package com.viepovsky.rebarcount;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+
 @Service
 class CountingService {
     private RebarCount rebarCount;
@@ -16,15 +17,28 @@ class CountingService {
         return rebarCount;
     }
 
+    RebarCount calculateRebarsLengthInSlab(SlabRebars rebars) {
+        rebarCount = new RebarCount();
+        calculateAndStoreRebarsLength(rebars.getSlabLength(), rebars.getSlabWidth(), rebars.getUpperSpacing(), rebars.getUpperRebarsDiameter());
+        calculateAndStoreRebarsLength(rebars.getSlabWidth(), rebars.getSlabLength(), rebars.getLowerSpacing(), rebars.getLowerRebarsDiameter());
+        return rebarCount;
+    }
+
     private void initClassFields(BeamRebars rebars) {
         rebarCount = new RebarCount();
         rebarsLength = rebars.getBeamClearSpan() + rebars.getWidthOfSupport() * 2;
     }
 
+    private void calculateAndStoreRebarsLength(int firstSlabDimension, int secondSlabDimension, int slabSpacing, int diameter) {
+        int length = ((firstSlabDimension / slabSpacing) + 1) * secondSlabDimension;
+        storeRebars(length, diameter);
+        int lengthSecondDimension = ((secondSlabDimension / slabSpacing) + 1) * firstSlabDimension;
+        storeRebars(lengthSecondDimension, diameter);
+    }
+
     private void calculateAndStoreRebarsLength(int rebarsCount, int diameter) {
         int length = rebarsLength * rebarsCount;
         storeRebars(length, diameter);
-
     }
 
     private void calculateAndStoreStirrupLength(BeamRebars rebars) {

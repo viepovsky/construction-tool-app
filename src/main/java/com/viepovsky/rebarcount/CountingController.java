@@ -16,8 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 class CountingController {
     private final CountingService service;
 
-    @GetMapping
+    @GetMapping(path = "beam")
     ResponseEntity<RebarCount> getBeamRebarsLength(@RequestBody @Valid BeamRebars rebars) {
         return ResponseEntity.ok(service.calculateRebarsLengthInBeam(rebars));
+    }
+
+    @GetMapping(path = "slab")
+    ResponseEntity<RebarCount> getSlabRebarsLength(@RequestBody @Valid SlabRebars rebars) {
+        return ResponseEntity.ok(service.calculateRebarsLengthInSlab(rebars));
     }
 }
