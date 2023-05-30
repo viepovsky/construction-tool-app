@@ -3,16 +3,20 @@ package com.viepovsky.rebarcount;
 import com.viepovsky.rebarcount.dto.BeamRequest;
 import com.viepovsky.rebarcount.dto.RebarLengthResponse;
 import com.viepovsky.rebarcount.dto.SlabRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
 @Service
 class CountingService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CountingService.class);
     private RebarLengthResponse rebarLengthResponse;
     private int rebarsLength;
 
     RebarLengthResponse calculateRebarsLengthInBeam(BeamRequest rebars) {
+        LOGGER.info("Starting to calculate beam rebars length.");
         initClassFields(rebars);
         calculateAndStoreRebarsLength(rebars.getUpperRebarsCount(), rebars.getUpperRebarsDiameter());
         calculateAndStoreRebarsLength(rebars.getLowerRebarsCount(), rebars.getLowerRebarsDiameter());
@@ -21,6 +25,7 @@ class CountingService {
     }
 
     RebarLengthResponse calculateRebarsLengthInSlab(SlabRequest rebars) {
+        LOGGER.info("Starting to calculate slab rebars length.");
         rebarLengthResponse = new RebarLengthResponse();
         calculateAndStoreRebarsLength(rebars.getSlabLength(), rebars.getSlabWidth(), rebars.getUpperSpacing(), rebars.getUpperRebarsDiameter());
         calculateAndStoreRebarsLength(rebars.getSlabWidth(), rebars.getSlabLength(), rebars.getLowerSpacing(), rebars.getLowerRebarsDiameter());
